@@ -57,18 +57,18 @@ public class MvcApiResource {
 		RequestMapping requestMapping = controllerClass.getAnnotation(RequestMapping.class);
 		if (requestMapping == null)
 		{
-			log.warn("Class {} has handler methods, but no class-level @RequestMapping.  No documentation will be generated",controllerClass.getName());
+			MvcApiResource.log.warn("Class {} has handler methods, but no class-level @RequestMapping.  No documentation will be generated",controllerClass.getName());
 			return null;
 		}
 		String[] requestUris = requestMapping.value();
 		if (requestUris == null || requestUris.length == 0)
 		{
-			log.warn("Class {} contains a @RequestMapping, but could not resolve the uri.  No documentation will be generated", controllerClass.getName());
+			MvcApiResource.log.warn("Class {} contains a @RequestMapping, but could not resolve the uri.  No documentation will be generated", controllerClass.getName());
 			return null;
 		}
 		if (requestUris.length > 1)
 		{
-			log.warn("Class {} contains a @RequestMapping with multiple uri's.  Only the first one will be documented.");
+			MvcApiResource.log.warn("Class {} contains a @RequestMapping with multiple uri's.  Only the first one will be documented.");
 		}
 		String requestUri = requestUris[0];
 		return requestUri;

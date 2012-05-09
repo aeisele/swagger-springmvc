@@ -2,7 +2,6 @@ package com.mangofactory.swagger.springmvc;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.wordnik.swagger.core.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +79,7 @@ public class ApiMethodReader {
         for (MethodParameter methodParameter : handlerMethod.getMethodParameters()) {
             ApiParam apiParam = methodParameter.getParameterAnnotation(ApiParam.class);
             if (apiParam == null) {
-                log.warn("{} is missing @ApiParam annotation - so generating default documentation");
+                ApiMethodReader.log.warn("{} is missing @ApiParam annotation - so generating default documentation");
                 generateDefaultParameterDocumentation(methodParameter);
                 continue;
             }

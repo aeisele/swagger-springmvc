@@ -43,7 +43,7 @@ public class ControllerDocumentation extends Documentation {
 			DocumentationEndPoint endPoint = new DocumentationEndPoint(requestUri, getApiDescription());
 			endpointMap.put(requestUri, endPoint);
 			addApi(endPoint);
-			log.debug("Added documentation endpoint for class {} at endpoint {}",getControllerClass().getName(),requestUri);
+			ControllerDocumentation.log.debug("Added documentation endpoint for class {} at endpoint {}",getControllerClass().getName(),requestUri);
 		}
 		
 		return endpointMap.get(requestUri);

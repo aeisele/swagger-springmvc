@@ -46,14 +46,14 @@ public class MvcApiReader {
 	private void buildMappingDocuments() {
 		resourceListing = config.newDocumentation();
 		
-		log.debug("Discovered {} candidates for documentation",handlerMappingBeans.size());
+		MvcApiReader.log.debug("Discovered {} candidates for documentation",handlerMappingBeans.size());
 		for (HandlerMapping handlerMapping : handlerMappingBeans.values())
 		{
 			if (RequestMappingHandlerMapping.class.isAssignableFrom(handlerMapping.getClass()))
 			{
 				processMethod((RequestMappingHandlerMapping) handlerMapping);
 			} else {
-				log.debug("Not documenting mapping of type {}, as it is not of a recognized type.",handlerMapping.getClass().getName());
+				MvcApiReader.log.debug("Not documenting mapping of type {}, as it is not of a recognized type.",handlerMapping.getClass().getName());
 			}
 		}
 	}
@@ -67,7 +67,7 @@ public class MvcApiReader {
 		if (endpoint != null)
 		{
 			resourceListCache.put(resource.getControllerClass(),endpoint);
-			log.debug("Added resource listing: {}",resource.toString());
+			MvcApiReader.log.debug("Added resource listing: {}",resource.toString());
 			resourceListing.addApi(endpoint);
 		}
 	}
@@ -124,7 +124,7 @@ public class MvcApiReader {
 			if (documentation.matchesName(apiName))
 				return documentation;
 		}
-		log.error("Could not find a matching resource for api with name '" + apiName + "'");
+		MvcApiReader.log.error("Could not find a matching resource for api with name '" + apiName + "'");
 		return null;
 	}
 }
