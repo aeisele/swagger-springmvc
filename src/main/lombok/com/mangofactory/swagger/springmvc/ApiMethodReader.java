@@ -2,6 +2,7 @@ package com.mangofactory.swagger.springmvc;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.mangofactory.swagger.ApiIgnoreParam;
 import com.wordnik.swagger.core.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -77,6 +78,9 @@ public class ApiMethodReader {
 
     private void documentParameters() {
         for (MethodParameter methodParameter : handlerMethod.getMethodParameters()) {
+            if (methodParameter.getParameterAnnotation(ApiIgnoreParam.class) != null) {
+                continue;
+            }
             ApiParam apiParam = methodParameter.getParameterAnnotation(ApiParam.class);
             if (apiParam == null) {
                 ApiMethodReader.log.warn("{} is missing @ApiParam annotation - so generating default documentation");
@@ -130,12 +134,12 @@ public class ApiMethodReader {
 
         PathVariable pathVariableAnnotation = methodParameter.getParameterAnnotation(PathVariable.class);
         if (pathVariableAnnotation != null) {
-            paramType = "path";
+            paramType = ApiValues.TYPE_PATH;
             required = true;
         } else {
             RequestParam requestParamAnnotation = methodParameter.getParameterAnnotation(RequestParam.class);
             if (requestParamAnnotation != null) {
-                paramType = "query";
+                paramType = ApiValues.TYPE_QUERY;
                 required = requestParamAnnotation.required();
                 if (!ValueConstants.DEFAULT_NONE.equals(requestParamAnnotation.defaultValue())) {
                     defaultValue = requestParamAnnotation.defaultValue();
